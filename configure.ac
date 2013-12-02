@@ -18,11 +18,8 @@ AC_PROG_CC
 gl_EARLY
 gl_INIT
 
-AM_MISSING_PROG([GIT2CL], [git2cl])
-
 # Checks for libraries.
-AC_SEARCH_LIBS([readline], [readline edit])
-AC_SEARCH_LIBS([error], [gnu])
+AC_SEARCH_LIBS([readline], [readline])
 
 # Checks for header files.
 AC_CHECK_HEADERS([OS.h fcntl.h libintl.h limits.h netdb.h stddef.h stdint.h stdlib.h string.h sys/param.h sys/socket.h unistd.h wchar.h])
