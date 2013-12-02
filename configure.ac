@@ -20,6 +20,7 @@ gl_INIT
 
 # Checks for libraries.
 AC_SEARCH_LIBS([readline], [readline edit])
+AC_SEARCH_LIBS([error], [gnu])
 
 # Checks for header files.
 AC_CHECK_HEADERS([OS.h fcntl.h libintl.h limits.h netdb.h stddef.h stdint.h stdlib.h string.h sys/param.h sys/socket.h unistd.h wchar.h])
@@ -42,7 +43,9 @@ AC_FUNC_REALLOC
 AC_FUNC_STRERROR_R
 AC_CHECK_FUNCS([getpagesize memset socket strdup strerror])
 
-AC_CHECK_FUNC([getaddrinfo],, [AC_MSG_ERROR([The required function getaddrinfo is not available on your system.  Install the most recent version of glibc to get it.])])
+AC_CHECK_FUNC([getaddrinfo],,
+[AC_MSG_ERROR([The required function getaddrinfo is not available on your 
+system.  Install the most recent version of glibc to get it.])])
 
 AC_CONFIG_FILES([Makefile
                  lib/Makefile])

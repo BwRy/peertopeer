@@ -1,4 +1,4 @@
-/* Initialization of all static data. */
+/* Create list_t entry for tcp_rem. */
 
 /* Copyright (C) 2013 Kieran Colford
 
@@ -20,5 +20,11 @@
 
 #include "com.h"
 
-pthread_mutex_t tcp_mut = PTHREAD_MUTEX_INITIALIZER;
-list_t *tcp_rem = NULL;
+list_t *
+entry (char *host, int sock)
+{
+  list_t *p = malloc (sizeof *p);
+  p->host = host;
+  p->sock = sock;
+  return p;
+}

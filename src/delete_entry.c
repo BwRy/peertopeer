@@ -1,4 +1,4 @@
-/* Initialization of all static data. */
+/* Delete an entry from the global tcp_rem table. */
 
 /* Copyright (C) 2013 Kieran Colford
 
@@ -20,5 +20,17 @@
 
 #include "com.h"
 
-pthread_mutex_t tcp_mut = PTHREAD_MUTEX_INITIALIZER;
-list_t *tcp_rem = NULL;
+void
+delete_entry(const list_t *lst)
+{
+  pthread_mutex_lock (&tcp_mut);
+  list_t head;
+  head.nxt = tcp_rem;
+  list_t *p = &head;
+  while (strcmp (lst->host, p->nxt->host))
+    p = p->nxt;
+  list_t *tmp = p->nxt;
+  p->nxt = p->nxt->nxt;
+  pthread_mutex_unlock (&tcp_mut);
+  free (tmp);
+}

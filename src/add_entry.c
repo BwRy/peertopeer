@@ -1,4 +1,4 @@
-/* Initialization of all static data. */
+/* Add an entry to the global tcp_rem table. */
 
 /* Copyright (C) 2013 Kieran Colford
 
@@ -20,5 +20,13 @@
 
 #include "com.h"
 
-pthread_mutex_t tcp_mut = PTHREAD_MUTEX_INITIALIZER;
-list_t *tcp_rem = NULL;
+void
+add_entry (const list_t *lst)
+{
+  list_t *p = malloc (sizeof *p);
+  *p = *lst;
+  pthread_mutex_lock (&tcp_mut);
+  p->nxt = tcp_rem;
+  tcp_rem = p;
+  pthread_mutex_unlock (&tcp_mut);
+}
