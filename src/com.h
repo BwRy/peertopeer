@@ -21,6 +21,10 @@
 #ifndef COM_H
 #define COM_H
 
+#ifndef HAVE_CONFIG_H
+# error I need config.h
+#endif
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -41,7 +45,9 @@ extern char *readline (const char *);
 
 #define TCP_PORT "3488"
 
-#define strdup(str) strcpy (calloc (strlen (str) + 1, sizeof (char)), (str))
+#ifndef strdup
+# define strdup(str) strcpy (calloc (strlen (str) + 1, sizeof (char)), (str))
+#endif
 
 typedef struct _mylist
 {

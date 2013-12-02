@@ -11,12 +11,14 @@ AC_CONFIG_HEADERS([config.h])
 
 AC_USE_SYSTEM_EXTENSIONS
 
-AC_SUBST([CFLAGS], [-ggdb3])
+CFLAGS="$CFLAGS -O0 -ggdb3"
 
 # Checks for programs.
 AC_PROG_CC
 gl_EARLY
 gl_INIT
+
+AM_MISSING_PROG([GIT2CL], [git2cl])
 
 # Checks for libraries.
 AC_SEARCH_LIBS([readline], [readline edit])

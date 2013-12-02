@@ -6,13 +6,14 @@ AM_CFLAGS = -pthread
 
 bin_PROGRAMS = com
 com_SOURCES =					\
+src/add_entry.c					\
+src/cleanup_sock.c				\
 src/com.h					\
-src/main.c 					\
-src/static.c 					\
-src/relay_daemon.c				\
-src/listen_daemon.c 				\
-src/connect_daemon.c 				\
-src/cleanup_sock.c 				\
+src/connect_daemon.c				\
+src/delete_entry.c				\
 src/entry.c					\
-src/add_entry.c 				\
-src/delete_entry.c
+src/listen_daemon.c				\
+src/main.c					\
+src/make_socket.c 				\
+src/relay_daemon.c				\
+src/static.c

@@ -1,9 +1,39 @@
-2013-12-01  Kieran Colford  <colfordk@gmail.com>
+2013-12-02  Kieran Colford <colfordk@gmail.com>
 
+	* Makefile.am, configure.ac, src/add_entry.c, src/delete_entry.c,
+	src/entry.c, src/static.c: Redistributed routines accross more
+	files.
+
+2013-12-01  Kieran Colford <colfordk@gmail.com>
+
+	* m4/gnulib-cache.m4: Fixed gnulib inclusions
+
+2013-12-01  Kieran Colford <colfordk@gmail.com>
+
+	* src/main.c: Added more error checking.
+
+2013-12-01  Kieran Colford <colfordk@gmail.com>
+
+	* ChangeLog, m4/.gitignore, m4/gnulib-cache.m4, src/cleanup_sock.c,
+	src/com.h, src/connect_daemon.c, src/listen_daemon.c, src/main.c,
+	src/relay_daemon.c, src/static.c: Added copyright to all the source
+	files.
+
+2013-12-01  Kieran Colford <colfordk@gmail.com>
+
+	* AUTHORS, COPYING, ChangeLog, INSTALL, NEWS, README, configure.ac: 
 	New user clarity files!
 
-	Added more files to the .gitignore file and changes to the configure.ac
+2013-12-01  Kieran Colford <colfordk@gmail.com>
 
-	Added a .gitignore file.
+	* .gitignore, configure.ac: Added more files to the .gitignore file
+	and changes to the configure.ac
 
-	Initial commit.
+2013-12-01  Kieran Colford <colfordk@gmail.com>
+
+	* .gitignore: Added a .gitignore file.
+
+2013-12-01  Kieran Colford <colfordk@gmail.com>
+
+	* Initial commit.
+
