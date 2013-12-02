@@ -41,6 +41,7 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_STRERROR_R
 AC_CHECK_FUNCS([getpagesize memset socket strdup strerror])
+
 AC_CHECK_FUNC([getaddrinfo],, [AC_MSG_ERROR([The required function getaddrinfo is not available on your system.  Install the most recent version of glibc to get it.])])
 
 AC_CONFIG_FILES([Makefile

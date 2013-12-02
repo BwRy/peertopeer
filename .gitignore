@@ -14,5 +14,7 @@ Makefile
 *.h
 config.status
 stamp-h1
+*.tar.*
+autom4te.cache/*
 
 !src/*
