@@ -1,13 +1,9 @@
-2013-12-01  Kieran Colford <colfordk@gmail.com>
+2013-12-01  Kieran Colford  <colfordk@gmail.com>
 
-	* .gitignore, configure.ac: Added more files to the .gitignore file
-	and changes to the configure.ac
+	New user clarity files!
 
-2013-12-01  Kieran Colford <colfordk@gmail.com>
+	Added more files to the .gitignore file and changes to the configure.ac
 
-	* .gitignore: Added a .gitignore file.
+	Added a .gitignore file.
 
-2013-12-01  Kieran Colford <colfordk@gmail.com>
-
-	* Initial commit.
-
+	Initial commit.
