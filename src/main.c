@@ -37,11 +37,20 @@ int main (int argc, char *argv[])
     {
       char *in = readline ("message: ");
       if (in == NULL)
-	break;
+	{
+	  fprintf (stderr, "\n");
+	  break;
+	}
       list_t *p;
       pthread_mutex_lock (&tcp_mut);
-      for (p = tcp_rem; p; p = p->nxt)
-	send (p->sock, in, strlen (in) + 1, 0);
+      for (p = tcp_rem; p != NULL; p = p->nxt)
+	{
+	  if (send (p->sock, in, strlen (in) + 1, 0) < 0)
+	    {
+	      error (0, errno, "Could not send message to host %s", p->host);
+	      pthread_cancel (p->thread);
+	    }
+	}
       pthread_mutex_unlock (&tcp_mut);
       free (in);
     }
