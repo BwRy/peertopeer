@@ -38,6 +38,10 @@ typedef struct _mylist
   struct _mylist *nxt;
 } list_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern pthread_mutex_t tcp_mut;
 extern list_t *tcp_rem;
 
@@ -53,5 +57,9 @@ extern void *connect_daemon (void *);
 extern void *relay_daemon (void *);
 
 extern int main (int, char **);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

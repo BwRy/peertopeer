@@ -27,14 +27,74 @@
 
 #include <readline/readline.h>
 
+#include <argp.h>
+
+static char *tgt = NULL;
+static char *prompt = "message: ";
+
+const char *argp_program_version = PACKAGE_STRING;
+const char *argp_program_bug_address = "<" PACKAGE_BUGREPORT ">";
+
+static void
+print_version (FILE *stream, struct argp_state *state)
+{
+  static const char *out[] = {
+    PACKAGE_STRING,
+    "",
+    "Copyright (C) 2013 Kieran Colford",
+    "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>",
+    "This is free software: you are free to change and redistribute it.",
+    "There is NO WARRANTY, to the extent permitted by law.",
+    "",
+    "Written by Kieran Colford",
+    0
+  };
+  const char **p = out;
+  
+  while (*p)
+    fprintf (stream, "%s\n", *p++);
+}
+
+void(*argp_program_version_hook)(FILE *, struct argp_state *) = print_version;
+
+static const struct argp_option opts[] = {
+  { "prompt", 'p', "STRING", 0, "Use STRING as the message " 
+    "to prompt the user for input"},
+  { 0 }
+};
+
+static error_t 
+parse (int key, char *arg, struct argp_state *state)
+{
+  switch (key)
+    {
+    case 'p':
+      prompt = arg;
+      break;
+    case ARGP_KEY_ARG:
+      if (state->arg_num == 1)
+	tgt = arg;
+      else
+	argp_usage (state);
+      break;
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+  return 0;
+}
+
+static const struct argp option = { opts, NULL, "[HOST]", "Connect to HOST " 
+				    "to establish a peer-to-peer chat " 
+				    "network." };
+
 int main (int argc, char *argv[])
 {
-  if (argc != 2)
-    error (1, 1, "Illegal arguments");
+  argp_parse (&option, argc, argv, 0, NULL, NULL);
 
   pthread_t thread_con;
-  if (pthread_create (&thread_con, NULL, connect_daemon, argv[1]))
-    error (1, errno, "pthread_create");
+  if (tgt != NULL)
+    if (pthread_create (&thread_con, NULL, connect_daemon, tgt))
+      error (1, errno, "pthread_create");
 
   pthread_t thread_lis;
   if (pthread_create (&thread_lis, NULL, listen_daemon, NULL))
@@ -42,7 +102,7 @@ int main (int argc, char *argv[])
 
   for (;;)
     {
-      char *in = readline ("message: ");
+      char *in = readline (prompt);
       if (in == NULL)
 	{
 	  fprintf (stderr, "\n");
