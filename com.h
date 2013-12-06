@@ -21,36 +21,14 @@
 #ifndef COM_H
 #define COM_H
 
-#ifndef HAVE_CONFIG_H
-# error I need config.h
+#ifdef HAVE_CONFIG_H
+# include "config.h"
 #endif
 
-#include "config.h"
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include <assert.h>
-
-#include <unistd.h>
 #include <pthread.h>
-#include <error.h>
-
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-
-#include <readline/readline.h>
 
 #define FATAL_ERRORS 1
-
 #define TCP_PORT "3488"
-
-/* String duplication. */
-#ifndef strdup
-# define strdup(str) strcpy (calloc (strlen (str) + 1, sizeof (char)), (str))
-#endif
 
 typedef struct _mylist
 {

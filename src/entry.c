@@ -20,6 +20,8 @@
 
 #include "com.h"
 
+#include <stdlib.h>
+
 list_t *
 entry (char *host, int sock)
 {

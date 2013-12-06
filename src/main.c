@@ -20,6 +20,13 @@
 
 #include "com.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
+#include <error.h>
+
+#include <readline/readline.h>
+
 int main (int argc, char *argv[])
 {
   if (argc != 2)

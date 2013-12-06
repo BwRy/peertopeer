@@ -21,6 +21,13 @@
 
 #include "com.h"
 
+#include <errno.h>
+#include <error.h>
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+
 int
 make_socket (const char *host, const char *service, int flags)
 {

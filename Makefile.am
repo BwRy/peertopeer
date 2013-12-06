@@ -4,7 +4,6 @@ EXTRA_DIST = m4/gnulib-cache.m4
 
 AM_CPPFLAGS = -Ilib
 AM_CFLAGS = -pthread
-AM_LDFLAGS = -Ilib
 
 pkglib_LTLIBRARIES = libcom.la
 libcom_la_LDFLAGS = $(GETADDRINFO) $(HOSTENT_LIB) $(INET_NTOP_LIB) $(LIBSOCKET) $(LTLIBINTL) $(LTLIBREADLINE) $(SERVENT_LIB)
@@ -19,8 +18,8 @@ src/make_socket.c 				\
 src/relay_daemon.c				\
 src/static.c
 
-include_HEADERS = src/com.h
+include_HEADERS = com.h
 
 bin_PROGRAMS = com
 com_SOURCES = src/main.c
-com_LDADD = libcom.la
+com_LDADD = libcom.la lib/libgnu.la
