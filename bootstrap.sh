@@ -1,4 +1,4 @@
 #!/bin/sh
 
 gnulib-tool --update
-autoreconf -i
+autoreconf -i --force
