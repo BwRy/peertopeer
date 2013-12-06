@@ -47,7 +47,8 @@ int main (int argc, char *argv[])
 	{
 	  if (send (p->sock, in, strlen (in) + 1, 0) < 0)
 	    {
-	      error (0, errno, "Could not send message to host %s", p->host);
+	      error (FATAL_ERRORS, errno, "Could not send message to host %s",
+		     p->host);
 	      pthread_cancel (p->thread);
 	    }
 	}

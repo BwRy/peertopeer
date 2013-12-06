@@ -41,10 +41,13 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
-extern char *readline (const char *);
+#include <readline/readline.h>
+
+#define FATAL_ERRORS 1
 
 #define TCP_PORT "3488"
 
+/* String duplication. */
 #ifndef strdup
 # define strdup(str) strcpy (calloc (strlen (str) + 1, sizeof (char)), (str))
 #endif
@@ -60,6 +63,7 @@ typedef struct _mylist
 extern pthread_mutex_t tcp_mut;
 extern list_t *tcp_rem;
 
+extern int make_socket (const char *, const char *, int);
 extern void cleanup_sock (int *);
 
 extern list_t *entry (char *, int);

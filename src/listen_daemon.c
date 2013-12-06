@@ -24,7 +24,7 @@
 void *
 listen_daemon (void *arg)
 {
-  int sock = make_socket (NULL, TCP_PORT);
+  int sock = make_socket (NULL, TCP_PORT, 0);
 
   pthread_cleanup_push (cleanup_sock, sock);
 
@@ -44,8 +44,9 @@ listen_daemon (void *arg)
 	       gai_strerror (errcode));
 
       pthread_t thread;
-      pthread_create (&thread, NULL, relay_daemon, 
-		      entry (strdup (host), peer));
+      if (pthread_create (&thread, NULL, relay_daemon, 
+			  entry (strdup (host), peer)))
+	error (1, errno, "Failed to spawn a relay.");
     }
   
   pthread_cleanup_pop (1);

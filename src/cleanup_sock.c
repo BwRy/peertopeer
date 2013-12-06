@@ -24,5 +24,6 @@
 void
 cleanup_sock (int *sock)
 {
-  shutdown (*sock, SHUT_RDWR);
+  if (shutdown (*sock, SHUT_RDWR))
+    error (1, errno, "Failed to shutdown a socket");
 }

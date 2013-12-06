@@ -24,7 +24,7 @@ void *
 connect_daemon (void *arg)
 {
   char *host = strdup (arg);
-  int sock = make_socket (host, TCP_PORT);
+  int sock = make_socket (host, TCP_PORT, 1);
   return relay_daemon (entry (host, sock));
 }
 

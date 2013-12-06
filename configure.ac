@@ -4,14 +4,22 @@
 AC_PREREQ([2.69])
 AC_INIT([com], [0.1], [colfordk@gmail.com])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([no-dist-gzip dist-xz gnu])
+
+# Start up automake.  xz has a better compression ratio than gzip so
+# we use it instead.
+AM_INIT_AUTOMAKE([no-dist-gzip dist-xz])
+
+# A minor novelty
 AM_SILENT_RULES([yes])
+
 AC_CONFIG_SRCDIR([src/main.c])
 AC_CONFIG_HEADERS([config.h])
 
+# I want everything!!!
 AC_USE_SYSTEM_EXTENSIONS
 
-CFLAGS="$CFLAGS -O0 -ggdb3"
+# This is just debugging stuff, I'll get rid of it later.
+CFLAGS="-ggdb3"
 
 # Checks for programs.
 AC_PROG_CC
@@ -19,6 +27,7 @@ gl_EARLY
 gl_INIT
 
 # Checks for libraries.
+# We want readline, so we take it.
 AC_SEARCH_LIBS([readline], [readline])
 
 # Checks for header files.
@@ -42,9 +51,11 @@ AC_FUNC_REALLOC
 AC_FUNC_STRERROR_R
 AC_CHECK_FUNCS([getpagesize memset socket strdup strerror])
 
-AC_CHECK_FUNC([getaddrinfo],,
-[AC_MSG_ERROR([The required function getaddrinfo is not available on your 
-system.  Install the most recent version of glibc to get it.])])
+# We need the getaddrinfo function from glibc.
+AC_CHECK_FUNC([getaddrinfo],, 
+
+[AC_MSG_ERROR([The required function getaddrinfo is not available on
+your system.  Install the most recent version of glibc to get it.])])
 
 AC_CONFIG_FILES([Makefile
                  lib/Makefile])

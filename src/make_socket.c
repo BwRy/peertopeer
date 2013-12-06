@@ -22,7 +22,7 @@
 #include "com.h"
 
 int
-make_socket (const char *host, const char *service, int isclient)
+make_socket (const char *host, const char *service, int flags)
 {
   struct addrinfo hints = { AI_PASSIVE, AF_UNSPEC, SOCK_STREAM, 0 };
   struct addrinfo *res;
@@ -40,17 +40,17 @@ make_socket (const char *host, const char *service, int isclient)
       sock = socket (p->ai_family, p->ai_socktype, p->ai_protocol);
       if (sock < 0)
 	{
-	  error (0, errno, "Failed to create socket");
+	  error (FATAL_ERRORS, errno, "Failed to create socket");
 	  errno = 0;
 	  continue;
 	}
-      if (isclient)
+      if (flags & 1)
 	{
 	  if (connect (sock, p->ai_addr, p->ai_addrlen))
 	    {
-	      error (0, errno, "Connect failed");
+	      error (FATAL_ERRORS, errno, "Connect failed");
 	      errno = 0;
-	      close (sock);
+	      cleanup_sock (&sock);
 	      continue;
 	    }
 	}
@@ -58,16 +58,16 @@ make_socket (const char *host, const char *service, int isclient)
 	{
 	  if (bind (sock, p->ai_addr, p->ai_addrlen))
 	    {
-	      error (0, errno, "Lookup failed");
+	      error (FATAL_ERRORS, errno, "Lookup failed");
 	      errno = 0;
-	      close (sock);
+	      cleanup_sock (&sock);
 	      continue;
 	    }
 	  if (listen (sock, 5))
 	    {
-	      error (0, errno, "Could not listen for connections");
+	      error (FATAL_ERRORS, errno, "Could not listen for connections");
 	      errno = 0;
-	      close (sock);
+	      cleanup_sock (&sock);
 	      continue;
 	    }
 	}

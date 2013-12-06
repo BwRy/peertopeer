@@ -39,7 +39,8 @@ relay_daemon (void *arg)
       ssize_t seen = recv (me->sock, buffer, sizeof buffer, 0);
       if (seen == 0)
 	{
-	  error (0, 0, "The host %s has disconnected from us", me->host);
+	  error (FATAL_ERRORS, 0, "The host %s has disconnected from us", 
+		 me->host);
 	  break;
 	}
       else if (seen < 0)
