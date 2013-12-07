@@ -31,14 +31,15 @@ int
 authenticate (const list_t *lst)
 {
   char buffer[] = AUTH_MESSAGE;
-  gc_cipher_encrypt_inline (global_crypt, sizeof buffer - 1, buffer);
-  if (send (lst->sock, buffer, sizeof buffer, 0) < 0)
+  int len = strlen (buffer);
+  gc_cipher_encrypt_inline (global_crypt, len, buffer);
+  if (send (lst->sock, buffer, len, 0) < 0)
     return -1;
   ssize_t seen = recv (lst->sock, buffer, sizeof buffer, 0);
-  if (seen < 0)
+  if (seen < 0 || seen != len)
     return -1;
-  gc_cipher_decrypt_inline (global_crypt, sizeof buffer - 1, buffer);
-  if (strcmp (buffer, AUTH_MESSAGE) != 0)
+  gc_cipher_decrypt_inline (global_crypt, seen, buffer);
+  if (strncmp (buffer, AUTH_MESSAGE, len) != 0)
     return -1;
   return 0;
 }
