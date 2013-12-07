@@ -3,5 +3,6 @@
 		       The robust chat network.
 
 
-
-
+To build this package, simply run `./configure && make'.  Make sure
+that you run the testsuite with `make check'.  To install it, run the
+command `sudo make install'.
