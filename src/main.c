@@ -90,7 +90,7 @@ static const struct argp option = { opts, parse, "[HOST]", "Connect to HOST "
 int main (int argc, char *argv[])
 {
   gc_init ();
-  gc_cipher_open (GC_AES256, GC_STREAM, &global_crypt);
+  gc_cipher_open (GC_AES128, GC_STREAM, &global_crypt);
 
   argp_parse (&option, argc, argv, 0, NULL, NULL);
 

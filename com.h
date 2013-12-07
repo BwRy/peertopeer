@@ -45,7 +45,7 @@
 
 #define FATAL_ERRORS 1
 #define TCP_PORT "3488"
-#define AUTH_MESSAGE "Hello, World!"
+#define AUTH_MESSAGE "Hello, World!  How are you today?"
 
 typedef struct _mylist
 {
