@@ -24,7 +24,7 @@ pthread_mutex_t tcp_mut = PTHREAD_MUTEX_INITIALIZER;
 list_t *tcp_rem = NULL;
 char *pass = NULL;
 
-int random_fd;
+int random_fd = -1;
 mpz_t prime;
 mpz_t base;
 
@@ -35,6 +35,8 @@ init ()
 
   /* Numbers for diffie-hellman exchange. */
   mpz_init_set_str (prime, PRIME, 10);
+  mpz_nextprime (prime, prime); /* Guarantee that `prime' is a prime
+				   number. */
   mpz_init_set_str (base, BASE, 10);
 
   /* Random number generation. */

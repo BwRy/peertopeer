@@ -14,10 +14,10 @@ src/cleanup_sock.c				\
 src/connect_daemon.c				\
 src/delete_entry.c				\
 src/entry.c					\
+src/init.c					\
 src/listen_daemon.c				\
 src/make_socket.c 				\
-src/relay_daemon.c				\
-src/static.c
+src/relay_daemon.c				
 
 include_HEADERS = com.h
 
