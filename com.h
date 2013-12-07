@@ -26,9 +26,11 @@
 #endif
 
 #include <pthread.h>
+#include "gc.h"
 
 #define FATAL_ERRORS 1
 #define TCP_PORT "3488"
+#define AUTH_MESSAGE "Hello, World!"
 
 typedef struct _mylist
 {
@@ -41,10 +43,15 @@ typedef struct _mylist
 #ifdef __cplusplus
 extern "C" {
 #endif
+#if 0
+}
+#endif
 
 extern pthread_mutex_t tcp_mut;
 extern list_t *tcp_rem;
+extern gc_cipher_handle global_crypt;
 
+extern int authenticate (const list_t *entry);
 extern int make_socket (const char *, const char *, int);
 extern void cleanup_sock (int *);
 
@@ -58,6 +65,9 @@ extern void *relay_daemon (void *);
 
 extern int main (int, char **);
 
+#if 0
+{
+#endif
 #ifdef __cplusplus
 }
 #endif

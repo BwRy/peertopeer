@@ -26,11 +26,14 @@
 #include <error.h>
 
 #include <readline/readline.h>
-
 #include <argp.h>
+
+#include "getpass.h"
 
 static char *tgt = NULL;
 static char *prompt = "message: ";
+static int use_pass = 0;
+static char *pass = NULL;
 
 const char *argp_program_version = PACKAGE_STRING;
 const char *argp_program_bug_address = "<" PACKAGE_BUGREPORT ">";
@@ -60,6 +63,8 @@ void(*argp_program_version_hook)(FILE *, struct argp_state *) = print_version;
 static const struct argp_option opts[] = {
   { "prompt", 'p', "STRING", 0, "Use STRING as the message " 
     "to prompt the user for input"},
+  { "secure", 's', 0, 0, "Use a secure connection" },
+  { "password", 1, "PASS", 0, "Use PASS as the password, implies --secure" },
   { 0 }
 };
 
@@ -68,6 +73,11 @@ parse (int key, char *arg, struct argp_state *state)
 {
   switch (key)
     {
+    case 1:
+      pass = arg;
+    case 's':
+      use_pass = 1;
+      break;
     case 'p':
       prompt = arg;
       break;
@@ -89,7 +99,15 @@ static const struct argp option = { opts, parse, "[HOST]", "Connect to HOST "
 
 int main (int argc, char *argv[])
 {
+  gc_init ();
+  gc_cipher_open (GC_AES256, GC_STREAM, &global_crypt);
+
   argp_parse (&option, argc, argv, 0, NULL, NULL);
+
+  if (use_pass && pass == NULL)
+    pass = getpass ("Password: ");
+
+  gc_cipher_setkey (global_crypt, strlen (pass), pass);
 
   pthread_t thread_con;
   if (tgt != NULL)
@@ -108,11 +126,13 @@ int main (int argc, char *argv[])
 	  fprintf (stderr, "\n");
 	  break;
 	}
+      size_t len = strlen (in);
+      gc_cipher_encrypt_inline (global_crypt, len, in);
       list_t *p;
       pthread_mutex_lock (&tcp_mut);
       for (p = tcp_rem; p != NULL; p = p->nxt)
 	{
-	  if (send (p->sock, in, strlen (in) + 1, 0) < 0)
+	  if (send (p->sock, in, len, 0) < 0)
 	    {
 	      error (FATAL_ERRORS, errno, "Could not send message to host %s",
 		     p->host);

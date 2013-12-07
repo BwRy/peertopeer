@@ -22,3 +22,5 @@
 
 pthread_mutex_t tcp_mut = PTHREAD_MUTEX_INITIALIZER;
 list_t *tcp_rem = NULL;
+
+gc_cipher_handle global_crypt = NULL;
