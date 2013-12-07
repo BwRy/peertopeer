@@ -51,10 +51,10 @@ print_version (FILE *stream, struct argp_state *state)
 void(*argp_program_version_hook)(FILE *, struct argp_state *) = print_version;
 
 static const struct argp_option opts[] = {
-  { "prompt", 'p', "STRING", 0, "Use STRING as the message " 
+  { "prompt", 'p', "STRING", 0, "use STRING as the message " 
     "to prompt the user for input"},
-  { "secure", 's', 0, 0, "Use a secure connection" },
-  { "password", 1, "PASS", 0, "Use PASS as the password, implies --secure" },
+  { "secure", 's', 0, 0, "use a secure connection" },
+  { "password", 1, "PASS", 0, "use PASS as the password, implies --secure" },
   { 0 }
 };
 
