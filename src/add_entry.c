@@ -20,8 +20,6 @@
 
 #include "com.h"
 
-#include <stdlib.h>
-
 void
 add_entry (const list_t *lst)
 {

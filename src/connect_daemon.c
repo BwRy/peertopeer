@@ -20,8 +20,6 @@
 
 #include "com.h"
 
-#include <string.h>
-
 void *
 connect_daemon (void *arg)
 {

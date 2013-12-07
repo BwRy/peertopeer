@@ -21,14 +21,6 @@
 
 #include "com.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <error.h>
-
-#include <sys/socket.h>
-
 void *
 relay_daemon (void *arg)
 {

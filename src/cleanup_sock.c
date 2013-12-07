@@ -21,10 +21,6 @@
 
 #include "com.h"
 
-#include <sys/socket.h>
-#include <errno.h>
-#include <error.h>
-
 void
 cleanup_sock (int *sock)
 {

@@ -21,14 +21,6 @@
 
 #include "com.h"
 
-#include <string.h>
-#include <errno.h>
-#include <error.h>
-
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-
 void *
 listen_daemon (void *arg)
 {

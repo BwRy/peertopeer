@@ -20,16 +20,6 @@
 
 #include "com.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <errno.h>
-#include <error.h>
-
-#include <readline/readline.h>
-#include <argp.h>
-
-#include "getpass.h"
-
 static char *tgt = NULL;
 static char *prompt = "message: ";
 static int use_pass = 0;

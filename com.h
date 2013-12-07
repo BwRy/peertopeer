@@ -25,7 +25,22 @@
 # include "config.h"
 #endif
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include <errno.h>
+#include <error.h>
+
 #include <pthread.h>
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+
+#include <argp.h>
+#include <readline/readline.h>
+#include "getpass.h"
 #include "gc.h"
 
 #define FATAL_ERRORS 1

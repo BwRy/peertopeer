@@ -20,9 +20,6 @@
 
 #include "com.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 void
 delete_entry(const list_t *lst)
 {
