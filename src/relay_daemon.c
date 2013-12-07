@@ -32,7 +32,8 @@ relay_daemon (void *arg)
   add_entry (me);
   pthread_cleanup_push (delete_entry, me->host);
 
-  authenticate (me);
+  if (authenticate (me))
+    pthread_exit (0);
 
   for (;;)
     {
@@ -49,16 +50,18 @@ relay_daemon (void *arg)
 	error (1, errno, "An error occured when recieving data");
       else
 	{
+	  gc_cipher_decrypt_inline (me->cipher, seen, buffer);
 	  list_t *p;
 	  pthread_mutex_lock (&tcp_mut);
 	  for (p = tcp_rem; p; p = p->nxt)
 	    {
 	      if (p->sock == me->sock)
 		continue;
+	      gc_cipher_encrypt_inline (p->cipher, seen, buffer);
 	      if (send (p->sock, buffer, (size_t) seen, 0) < 0)
 		error (1, errno, "Failed to relay data to host %s", p->host);
+	      gc_cipher_decrypt_inline (p->cipher, seen, buffer);
 	    }
-	  gc_cipher_decrypt_inline (global_crypt, seen, buffer);
 	  printf ("%s: %s\n", me->host, buffer);
 	}
     }

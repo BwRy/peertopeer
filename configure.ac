@@ -12,11 +12,13 @@ AM_SILENT_RULES([yes])
 AC_CONFIG_SRCDIR([com.h])
 AC_CONFIG_HEADERS([config.h])
 LT_INIT
+CFLAGS="-ggdb3"
 AC_PROG_CC
 gl_EARLY
 gl_INIT
 
-CFLAGS="-ggdb3"
+AC_CHECK_LIB(gmp, __gmpz_init, ,
+       [AC_MSG_ERROR([GNU MP not found, see http://gmplib.org/])])
 
 AC_CONFIG_FILES([Makefile
                  lib/Makefile])

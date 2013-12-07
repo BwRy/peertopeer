@@ -22,5 +22,21 @@
 
 pthread_mutex_t tcp_mut = PTHREAD_MUTEX_INITIALIZER;
 list_t *tcp_rem = NULL;
+char *pass = NULL;
 
-gc_cipher_handle global_crypt = NULL;
+int random_fd;
+mpz_t prime;
+mpz_t base;
+
+void
+init ()
+{
+  gc_init ();
+
+  /* Numbers for diffie-hellman exchange. */
+  mpz_init_set_str (prime, PRIME, 10);
+  mpz_init_set_str (base, BASE, 10);
+
+  /* Random number generation. */
+  random_fd = open ("/dev/urandom", O_RDONLY);
+}

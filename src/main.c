@@ -23,7 +23,6 @@
 static char *tgt = NULL;
 static char *prompt = "message: ";
 static int use_pass = 0;
-static char *pass = NULL;
 
 const char *argp_program_version = PACKAGE_STRING;
 const char *argp_program_bug_address = "<" PACKAGE_BUGREPORT ">";
@@ -89,15 +88,12 @@ static const struct argp option = { opts, parse, "[HOST]", "Connect to HOST "
 
 int main (int argc, char *argv[])
 {
-  gc_init ();
-  gc_cipher_open (GC_AES128, GC_STREAM, &global_crypt);
+  init ();
 
   argp_parse (&option, argc, argv, 0, NULL, NULL);
 
   if (use_pass && pass == NULL)
     pass = getpass ("Password: ");
-
-  gc_cipher_setkey (global_crypt, strlen (pass), pass);
 
   pthread_t thread_con;
   if (tgt != NULL)
@@ -117,17 +113,18 @@ int main (int argc, char *argv[])
 	  break;
 	}
       size_t len = strlen (in);
-      gc_cipher_encrypt_inline (global_crypt, len, in);
       list_t *p;
       pthread_mutex_lock (&tcp_mut);
       for (p = tcp_rem; p != NULL; p = p->nxt)
 	{
+	  gc_cipher_encrypt_inline (p->cipher, len, in);
 	  if (send (p->sock, in, len, 0) < 0)
 	    {
 	      error (FATAL_ERRORS, errno, "Could not send message to host %s",
 		     p->host);
 	      pthread_cancel (p->thread);
 	    }
+	  gc_cipher_decrypt_inline (p->cipher, len, in);
 	}
       pthread_mutex_unlock (&tcp_mut);
       free (in);
