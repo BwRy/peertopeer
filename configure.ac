@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.69])
 AC_INIT([Com], [0.1], [colfordk@gmail.com],, 
-	[https://github.com/kcolford/peertopeer.git])
+	[https://github.com/kcolford/peertopeer])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([no-dist-gzip dist-xz])

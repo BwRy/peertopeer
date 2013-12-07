@@ -72,7 +72,7 @@ parse (int key, char *arg, struct argp_state *state)
       prompt = arg;
       break;
     case ARGP_KEY_ARG:
-      if (state->arg_num == 1)
+      if (state->arg_num == 0)
 	tgt = arg;
       else
 	argp_usage (state);
@@ -83,7 +83,7 @@ parse (int key, char *arg, struct argp_state *state)
   return 0;
 }
 
-static const struct argp option = { opts, NULL, "[HOST]", "Connect to HOST " 
+static const struct argp option = { opts, parse, "[HOST]", "Connect to HOST " 
 				    "to establish a peer-to-peer chat " 
 				    "network." };
 
