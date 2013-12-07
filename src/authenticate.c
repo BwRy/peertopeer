@@ -23,7 +23,20 @@
 
 int
 authenticate (const list_t *lst)
-{
-  /* TODO: This always returns true which shouldn't be the case. */
-  return 0;
+{  
+  char *buff = xstrdup (pass);
+  int len = strlen (buff);
+
+  /* Handshake */
+  gc_cipher_encrypt_inline (lst->cipher, len, buff);
+  if (send (lst->sock, buff, len, 0) < 0)
+    return -1;
+  if (recv (lst->sock, buff, len, 0) < 0)
+    return -1;
+  gc_cipher_decrypt_inline (lst->cipher, len, buff);
+
+  if (strcmp (buff, pass))
+    return -1;
+  else
+    return 0;
 }
