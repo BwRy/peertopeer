@@ -24,5 +24,6 @@
 int
 authenticate (const list_t *lst)
 {
+  /* TODO: This always returns true which shouldn't be the case. */
   return 0;
 }
