@@ -42,6 +42,7 @@
 #include <readline/readline.h>
 #include "getpass.h"
 #include "gc.h"
+#include "xalloc.h"
 
 #define FATAL_ERRORS 1
 #define TCP_PORT "3488"

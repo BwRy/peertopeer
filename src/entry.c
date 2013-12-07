@@ -23,7 +23,7 @@
 list_t *
 entry (char *host, int sock)
 {
-  list_t *p = malloc (sizeof *p);
+  list_t *p = xmalloc (sizeof *p);
   p->host = host;
   p->sock = sock;
   return p;

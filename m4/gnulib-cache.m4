@@ -27,7 +27,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --lib=libgnu --source-base=lib --m4-base=m4 --doc-base=doc --tests-base=tests --aux-dir=build-aux --no-conditional-dependencies --libtool --macro-prefix=gl argp crypto/gc-rijndael error getaddrinfo getpass readline strdup-posix
+#   gnulib-tool --import --dir=. --lib=libgnu --source-base=lib --m4-base=m4 --doc-base=doc --tests-base=tests --aux-dir=build-aux --no-conditional-dependencies --libtool --macro-prefix=gl argp crypto/gc-rijndael error getaddrinfo getpass readline strdup-posix xalloc
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([])
@@ -39,6 +39,7 @@ gl_MODULES([
   getpass
   readline
   strdup-posix
+  xalloc
 ])
 gl_AVOID([])
 gl_SOURCE_BASE([lib])

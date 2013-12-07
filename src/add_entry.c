@@ -23,7 +23,7 @@
 void
 add_entry (const list_t *lst)
 {
-  list_t *p = malloc (sizeof *p);
+  list_t *p = xmalloc (sizeof *p);
   *p = *lst;
   pthread_mutex_lock (&tcp_mut);
   p->nxt = tcp_rem;

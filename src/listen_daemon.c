@@ -45,7 +45,7 @@ listen_daemon (void *arg)
 
       pthread_t thread;
       if (pthread_create (&thread, NULL, relay_daemon, 
-			  entry (strdup (host), peer)))
+			  entry (xstrdup (host), peer)))
 	error (1, errno, "Failed to spawn a relay.");
     }
   

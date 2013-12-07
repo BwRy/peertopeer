@@ -2,7 +2,7 @@ SUBDIRS = lib
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = m4/gnulib-cache.m4 $(TESTS)
 
-AM_CPPFLAGS = -Ilib
+AM_CPPFLAGS = -I$(srcdir)/lib
 AM_CFLAGS = -pthread
 
 pkglib_LTLIBRARIES = libcom.la
