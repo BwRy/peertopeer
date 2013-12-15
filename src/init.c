@@ -27,17 +27,18 @@ char *pass = NULL;
 #if HAVE_LIBSSL
 SSL_CTX *client;
 SSL_CTX *server;
-#endif
+#else
 mpz_t prime;
 mpz_t base;
+#endif
 
 void
 init ()
 {
 #if HAVE_LIBSSL
   SSL_library_init ();
-  client = SSL_CTX_new (SSLv23_client_method);
-  server = SSL_CTX_new (SSLv23_server_method);
+  client = SSL_CTX_new (SSLv23_client_method ());
+  server = SSL_CTX_new (SSLv23_server_method ());
 #else
   gc_init ();
 
