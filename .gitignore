@@ -1,25 +1,32 @@
-*.m4
+# backups
 *~
+
+# extra dirs
+autom4te.cache/*
 build-aux/*
 lib/*
+m4/*
+tests/*
+
+# build dirs
+.deps/*
 .libs/*
+
+# autotools files
 *.in
 *.log
+aclocal.m4
+config.h
+config.status
 configure.scan
 configure
 libtool
+Makefile
+stamp-h1
+
+# build files
+com
 *.o
 *.lo
 *.la
-com
-.deps/*
-Makefile
-*.h
-config.status
-stamp-h1
 *.tar.*
-autom4te.cache/*
-TAGS
-
-!com.h
-!src/*
