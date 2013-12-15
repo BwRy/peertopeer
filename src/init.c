@@ -24,12 +24,21 @@ pthread_mutex_t tcp_mut = PTHREAD_MUTEX_INITIALIZER;
 list_t *tcp_rem = NULL;
 char *pass = NULL;
 
+#if HAVE_LIBSSL
+SSL_CTX *client;
+SSL_CTX *server;
+#endif
 mpz_t prime;
 mpz_t base;
 
 void
 init ()
 {
+#if HAVE_LIBSSL
+  SSL_library_init ();
+  client = SSL_CTX_new (SSLv23_client_method);
+  server = SSL_CTX_new (SSLv23_server_method);
+#else
   gc_init ();
 
   /* Numbers for diffie-hellman exchange. */
@@ -37,4 +46,5 @@ init ()
   mpz_nextprime (prime, prime); /* Guarantee that `prime' is a prime
 				   number. */
   mpz_init_set_str (base, BASE, 10);
+#endif
 }

@@ -42,13 +42,17 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
-#include <gmp.h>
-
 #include <argp.h>
 #include <readline/readline.h>
 #include "getpass.h"
-#include "gc.h"
 #include "xalloc.h"
+
+#if HAVE_LIBSSL
+# include <openssl/ssl.h>
+#else
+# include <gmp.h>
+# include "gc.h"
+#endif /* HAVE_LIBSSL */
 
 #define FATAL_ERRORS 1
 #define TCP_PORT "3488"
@@ -58,8 +62,12 @@
 
 typedef struct 
 {
+#if HAVE_LIBSSL
+  SSL *ssl;
+#else
   int sock;
   gc_cipher_handle cipher;
+#endif
 } connect_t;
 
 typedef struct _mylist
@@ -81,8 +89,13 @@ extern pthread_mutex_t tcp_mut;
 extern list_t *tcp_rem;
 extern char *pass;
 
+#if HAVE_LIBSSL
+extern SSL_CTX *client;
+extern SSL_CTX *server;
+#else
 extern mpz_t prime;
 extern mpz_t base;
+#endif /* HAVE_LIBSSL */
 
 extern int authenticate (const list_t *entry);
 extern int make_socket (const char *, const char *, int);

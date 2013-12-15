@@ -33,8 +33,12 @@ delete_entry(list_t *lst)
   pthread_mutex_unlock (&tcp_mut);
 
   free (lst->host);
+#if HAVE_LIBSSL
+  SSL_shutdown (lst->conn->ssl);
+#else
   shutdown (lst->conn->sock, SHUT_RDWR);
   gc_cipher_close (lst->conn->cipher);
+#endif
   free (lst->conn);
   pthread_cancel (lst->thread);
   free (lst);

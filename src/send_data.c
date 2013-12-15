@@ -23,10 +23,14 @@ The copyright holder can be contacted at <colfordk@gmail.com>. */
 ssize_t 
 send_data (connect_t *conn, const void *buf, size_t len)
 {
+#if HAVE_LIBSSL
+  return SSL_write (conn->ssl, buf, len);
+#else
   void *buff = xmemdup (buf, len);
   gc_cipher_encrypt_inline (conn->cipher, len, buff);
   ssize_t ret = send (conn->sock, buff, len, 0);
   free (buff);
   return ret;
+#endif
 }
 

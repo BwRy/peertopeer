@@ -23,7 +23,11 @@ The copyright holder can be contacted at <colfordk@gmail.com>. */
 ssize_t 
 recv_data (connect_t *conn, void *buf, size_t len)
 {
+#if HAVE_LIBSSL
+  return SSL_read (conn->ssl, buf, len);
+#else
   ssize_t ret = recv (conn->sock, buf, len, 0);
   gc_cipher_decrypt_inline (conn->cipher, len, buf);
   return ret;
+#endif
 }

@@ -30,6 +30,9 @@ AC_PROG_CC
 gl_EARLY
 gl_INIT
 
+# Experimental support for ssl.
+AC_CHECK_LIB([ssl], [SSL_library_init])
+
 # We want the GMP for the diffie-hellman key exchange routines.
 AC_CHECK_LIB(gmp, __gmpz_init, ,
        [AC_MSG_ERROR([GNU MP not found, see http://gmplib.org/])])
