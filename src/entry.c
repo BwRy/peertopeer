@@ -20,7 +20,7 @@
 
 #include "com.h"
 
-#define len (mpz_sizeinbase (prime, CHAR_BIT))
+#define len (mpz_sizeinbase (prime, 8))
 
 list_t *
 entry (char *host, int sock, int flags)
