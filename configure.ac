@@ -35,5 +35,6 @@ AC_CHECK_LIB(gmp, __gmpz_init, ,
        [AC_MSG_ERROR([GNU MP not found, see http://gmplib.org/])])
 
 AC_CONFIG_FILES([Makefile
-                 lib/Makefile])
+                 lib/Makefile
+		 tests/Makefile])
 AC_OUTPUT
