@@ -2,12 +2,15 @@
 *~
 build-aux/*
 lib/*
+.libs/*
 *.in
 *.log
 configure.scan
 configure
+libtool
 *.o
-*.a
+*.lo
+*.la
 com
 .deps/*
 Makefile
@@ -16,5 +19,7 @@ config.status
 stamp-h1
 *.tar.*
 autom4te.cache/*
+TAGS
 
+!com.h
 !src/*
