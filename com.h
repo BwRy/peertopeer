@@ -89,7 +89,7 @@ extern int make_socket (const char *, const char *, int);
 extern ssize_t recv_data (connect_t *, void *, size_t);
 extern ssize_t send_data (connect_t *, const void *, size_t);
 
-extern list_t *entry (char *, int);
+extern list_t *entry (char *, int, int);
 extern void add_entry (list_t *);
 extern void delete_entry (list_t *);
 

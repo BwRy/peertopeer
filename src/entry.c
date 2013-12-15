@@ -23,7 +23,7 @@
 #define len (mpz_sizeinbase (prime, CHAR_BIT))
 
 list_t *
-entry (char *host, int sock)
+entry (char *host, int sock, int flags)
 {
   list_t *p = xmalloc (sizeof *p);
   p->host = xstrdup (host);
