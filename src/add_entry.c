@@ -21,11 +21,10 @@
 #include "com.h"
 
 void
-add_entry (const list_t *lst)
+add_entry (list_t *lst)
 {
-  list_t *p = xmemdup (lst, sizeof *lst);
   pthread_mutex_lock (&tcp_mut);
-  p->nxt = tcp_rem;
-  tcp_rem = p;
+  lst->nxt = tcp_rem;
+  tcp_rem = lst;
   pthread_mutex_unlock (&tcp_mut);
 }

@@ -26,11 +26,8 @@ relay_daemon (void *arg)
 {
   list_t *me = arg;
   me->thread = pthread_self ();
-  pthread_cleanup_push (free, me);
-  pthread_cleanup_push (cleanup_sock, &me->sock);
-  pthread_cleanup_push (free, me->host);
   add_entry (me);
-  pthread_cleanup_push (delete_entry, me->host);
+  pthread_cleanup_push (delete_entry, me);
 
   if (authenticate (me))
     pthread_exit (0);
@@ -39,36 +36,21 @@ relay_daemon (void *arg)
     {
       char buffer[1000];
       memset (buffer, 0, sizeof buffer);
-      ssize_t seen = recv (me->sock, buffer, sizeof buffer, 0);
-      if (seen == 0)
+      ssize_t seen = recv_data (me->conn, buffer, sizeof buffer);
+      if (seen <= 0)
+	break;
+      list_t *p;
+      pthread_mutex_lock (&tcp_mut);
+      for (p = tcp_rem; p; p = p->nxt)
 	{
-	  error (FATAL_ERRORS, 0, "The host %s has disconnected from us", 
-		 me->host);
-	  break;
+	  if (p == me)
+	    continue;
+	  if (send_data (p->conn, buffer, (size_t) seen) <= 0)
+	    delete_entry (p);
 	}
-      else if (seen < 0)
-	error (1, errno, "An error occured when recieving data");
-      else
-	{
-	  gc_cipher_decrypt_inline (me->cipher, seen, buffer);
-	  list_t *p;
-	  pthread_mutex_lock (&tcp_mut);
-	  for (p = tcp_rem; p; p = p->nxt)
-	    {
-	      if (p->sock == me->sock)
-		continue;
-	      gc_cipher_encrypt_inline (p->cipher, seen, buffer);
-	      if (send (p->sock, buffer, (size_t) seen, 0) < 0)
-		error (1, errno, "Failed to relay data to host %s", p->host);
-	      gc_cipher_decrypt_inline (p->cipher, seen, buffer);
-	    }
-	  printf ("%s: %s\n", me->host, buffer);
-	}
+      printf ("%s: %s\n", me->host, buffer);
     }
 
-  pthread_cleanup_pop (1);
-  pthread_cleanup_pop (1);
-  pthread_cleanup_pop (1);
   pthread_cleanup_pop (1);
   return NULL;
 }

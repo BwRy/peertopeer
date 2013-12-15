@@ -28,19 +28,11 @@ authenticate (const list_t *lst)
   int len = strlen (buff);
 
   /* Handshake */
-  gc_cipher_encrypt_inline (lst->cipher, len, buff);
-  if (send (lst->sock, buff, len, 0) < 0)
-    goto fail;
-  if (recv (lst->sock, buff, len, 0) < 0)
-    goto fail;
-  gc_cipher_decrypt_inline (lst->cipher, len, buff);
+  send_data (lst->conn, buff, len);
+  memset (buff, 0, len);
+  recv_data (lst->conn, buff, len);
 
-  if (strcmp (buff, pass))
-    goto fail;
-
-  return 0;
-
- fail:
+  int ret = strcmp (buff, pass) == 0 ? 0 : -1;
   free (buff);
-  return -1;
+  return ret;
 }

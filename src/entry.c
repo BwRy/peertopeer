@@ -26,17 +26,18 @@ list_t *
 entry (char *host, int sock)
 {
   list_t *p = xmalloc (sizeof *p);
-  p->host = host;
-  p->sock = sock;
-  gc_cipher_open (GC_AES256, GC_STREAM, &p->cipher);
+  p->host = xstrdup (host);
+
+  connect_t *conn = xmalloc (sizeof *conn);
+  conn->sock = sock;
+  gc_cipher_open (GC_AES256, GC_STREAM, &conn->cipher);
   mpz_t my_num;
   mpz_init (my_num);
 
   char *key = xcalloc (len, sizeof *key);
 
   pthread_cleanup_push (free, key);
-  if (read (random_fd, key, len) < 0)
-    error (1, errno, "Failed to generate a random key");
+  gc_random (key, len);
 
   mpz_import (my_num, len, 1, 1, 1, 0, key);
 
@@ -61,8 +62,10 @@ entry (char *host, int sock)
   mpz_powm (sent, sent, my_num, prime);
   mpz_export (key, NULL, 1, 1, 1, 0, sent); 
  
-  gc_cipher_setkey (p->cipher, len, key);
+  gc_cipher_setkey (conn->cipher, len, key);
   pthread_cleanup_pop (1);
+
+  p->conn = conn;
 
   return p;
 }

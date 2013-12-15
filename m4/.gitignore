@@ -86,3 +86,5 @@
 /gc-rijndael.m4
 /gc.m4
 /xalloc.m4
+/absolute-header.m4
+/gc-random.m4

@@ -24,7 +24,6 @@ pthread_mutex_t tcp_mut = PTHREAD_MUTEX_INITIALIZER;
 list_t *tcp_rem = NULL;
 char *pass = NULL;
 
-int random_fd = -1;
 mpz_t prime;
 mpz_t base;
 
@@ -38,7 +37,4 @@ init ()
   mpz_nextprime (prime, prime); /* Guarantee that `prime' is a prime
 				   number. */
   mpz_init_set_str (base, BASE, 10);
-
-  /* Random number generation. */
-  random_fd = open ("/dev/urandom", O_RDONLY);
 }
