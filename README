@@ -6,3 +6,6 @@
 To build this package, simply run `./configure && make'.  Make sure
 that you run the testsuite with `make check'.  To install it, run the
 command `sudo make install'.
+
+SSL/TLS support is in development, see the ssl branch in the git
+repository for more information.
