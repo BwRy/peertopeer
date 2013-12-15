@@ -19,8 +19,8 @@ AM_SILENT_RULES([yes])
 AC_CONFIG_SRCDIR([com.h])
 AC_CONFIG_HEADERS([config.h])
 
-# Libtool!
-LT_INIT
+# Libtool, without the shared libraries.
+LT_INIT([disable-shared])
 
 # Debuging stuff, it'll be removed later.
 CFLAGS="-ggdb3"
