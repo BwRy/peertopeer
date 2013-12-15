@@ -43,7 +43,7 @@
 #include <netdb.h>
 
 #include <argp.h>
-#include <readline/readline.h>
+#include "readline.h"
 #include "getpass.h"
 #include "xalloc.h"
 
