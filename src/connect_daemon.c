@@ -24,6 +24,6 @@ void *
 connect_daemon (void *arg)
 {
   int sock = make_socket ((char *) arg, TCP_PORT, 1);
-  return relay_daemon (entry ((char *) arg, sock));
+  return relay_daemon (entry ((char *) arg, sock, 1));
 }
 
