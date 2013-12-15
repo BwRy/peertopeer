@@ -42,7 +42,7 @@ listen_daemon (void *arg)
 	       gai_strerror (errcode));
 
       pthread_t thread;
-      if (pthread_create (&thread, NULL, relay_daemon, entry (host, peer)))
+      if (pthread_create (&thread, NULL, relay_daemon, entry (host, peer, 0)))
 	error (1, errno, "Failed to spawn a relay.");
     }
   
