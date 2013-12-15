@@ -30,12 +30,8 @@ entry (char *host, int sock, int flags)
   connect_t *conn = xmalloc (sizeof *conn);
 
 #if HAVE_LIBSSL
-  conn->ssl = SSL_new (ctx);
+  conn->ssl = flags & 1 ? SSL_new (client) : SSL_new (server);
   SSL_set_fd (conn->ssl, sock);
-  if (flags & 1)
-    SSL_set_connect_state (conn->ssl);
-  else
-    SSL_accept (conn->ssl);
 #else
   conn->sock = sock;
   gc_cipher_open (GC_AES256, GC_STREAM, &conn->cipher);
