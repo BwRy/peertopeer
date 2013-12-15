@@ -24,6 +24,3 @@ include_HEADERS = com.h
 bin_PROGRAMS = com
 com_SOURCES = src/main.c
 com_LDADD = libcom.la lib/libgnu.la
-
-AM_TESTS_ENVIRONMENT = export PATH=.:$$PATH;
-TESTS = tests/help.sh tests/version.sh
