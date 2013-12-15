@@ -46,7 +46,7 @@ relay_daemon (void *arg)
 	  if (p == me)
 	    continue;
 	  if (send_data (p->conn, buffer, (size_t) seen) <= 0)
-	    delete_entry (p);
+	    pthread_cancel (p->thread);
 	}
       printf ("%s: %s\n", me->host, buffer);
     }
