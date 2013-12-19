@@ -100,6 +100,15 @@ extern list_t *entry (char *, int, int);
 extern void add_entry (list_t *);
 extern void delete_entry (list_t *);
 
+struct broadcast_arg
+{
+  pthread_t waiton;
+  list_t *from;
+  void *data;
+  size_t len;
+};
+
+extern void *broadcast (void *);
 extern void *listen_daemon (void *);
 extern void *connect_daemon (void *);
 extern void *relay_daemon (void *);
