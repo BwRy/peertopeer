@@ -28,9 +28,9 @@ authenticate (const list_t *lst)
   int len = strlen (buff);
 
   /* Handshake */
-  send_data (lst->conn, buff, len);
+  send_data (lst, buff, len);
   memset (buff, 0, len);
-  recv_data (lst->conn, buff, len);
+  recv_data (lst, buff, len);
 
   int ret = strcmp (buff, pass) == 0 ? 0 : -1;
   free (buff);

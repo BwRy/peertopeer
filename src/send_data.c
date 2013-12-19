@@ -21,7 +21,7 @@ The copyright holder can be contacted at <colfordk@gmail.com>. */
 #include "com.h"
 
 ssize_t 
-send_data (connect_t *conn, const void *buf, size_t len)
+send_data (list_t *conn, const void *buf, size_t len)
 {
 #if HAVE_LIBSSL
   return SSL_write (conn->ssl, buf, len);

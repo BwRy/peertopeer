@@ -21,7 +21,7 @@ The copyright holder can be contacted at <colfordk@gmail.com>. */
 #include "com.h"
 
 ssize_t 
-recv_data (connect_t *conn, void *buf, size_t len)
+recv_data (list_t *conn, void *buf, size_t len)
 {
 #if HAVE_LIBSSL
   return SSL_read (conn->ssl, buf, len);

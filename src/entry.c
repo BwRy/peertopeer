@@ -27,14 +27,13 @@ entry (char *host, int sock, int flags)
 {
   list_t *p = xmalloc (sizeof *p);
   p->host = xstrdup (host);
-  connect_t *conn = xmalloc (sizeof *conn);
 
 #if HAVE_LIBSSL
-  conn->ssl = flags & 1 ? SSL_new (client) : SSL_new (server);
-  SSL_set_fd (conn->ssl, sock);
+  p->ssl = flags & 1 ? SSL_new (client) : SSL_new (server);
+  SSL_set_fd (p->ssl, sock);
 #else
-  conn->sock = sock;
-  gc_cipher_open (GC_AES256, GC_STREAM, &conn->cipher);
+  p->sock = sock;
+  gc_cipher_open (GC_AES256, GC_STREAM, &p->cipher);
   mpz_t my_num;
   mpz_init (my_num);
 
@@ -69,8 +68,6 @@ entry (char *host, int sock, int flags)
   gc_cipher_setkey (conn->cipher, len, key);
   pthread_cleanup_pop (1);
 #endif /* HAVE_LIBSSL */
-
-  p->conn = conn;
 
   return p;
 }

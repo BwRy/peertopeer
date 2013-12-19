@@ -54,20 +54,15 @@
 #define PRIME "6864797660130609714981900799081393217269435300143305409394463459185543183397656052122559640661454554977296311391480858037121987999716643812574028291115057151"
 #define BASE "3578289724048573982478935709382473802573492584578203457938452709382758477205983457380894572380759348573485773892758472309857398573498570272349"
 
-typedef struct 
+typedef struct _mylist
 {
+  char *host;
 #if HAVE_LIBSSL
   SSL *ssl;
 #else
   int sock;
   gc_cipher_handle cipher;
 #endif
-} connect_t;
-
-typedef struct _mylist
-{
-  char *host;
-  connect_t *conn;
   pthread_t thread;
   struct _mylist *nxt;
 } list_t;
@@ -93,8 +88,8 @@ extern mpz_t base;
 
 extern int authenticate (const list_t *entry);
 extern int make_socket (const char *, const char *, int);
-extern ssize_t recv_data (connect_t *, void *, size_t);
-extern ssize_t send_data (connect_t *, const void *, size_t);
+extern ssize_t recv_data (list_t *, void *, size_t);
+extern ssize_t send_data (list_t *, const void *, size_t);
 
 extern list_t *entry (char *, int, int);
 extern void add_entry (list_t *);
