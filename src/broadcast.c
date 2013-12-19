@@ -24,16 +24,14 @@ void *
 broadcast (void *arg)
 {
   struct broadcast_arg *me = arg;
-  if (me->flags & 1)
-    pthread_join (me->waiton);
   pthread_mutex_lock (&tcp_mut);
   list_t *p;
-  for (p = tcp_rem; p; p = p->next)
+  for (p = tcp_rem; p; p = p->nxt)
     {
       if (me->from == p)
 	continue;
-      if (send_data (me->from->conn, me->data, me->len) <= 0)
-	pthread_cancel (me->thread);
+      if (send_data (p, me->data, me->len) <= 0)
+	pthread_cancel (p->thread);
     }
   pthread_mutex_unlock (&tcp_mut);
   free (me->data);

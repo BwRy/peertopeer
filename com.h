@@ -86,7 +86,7 @@ extern mpz_t prime;
 extern mpz_t base;
 #endif /* HAVE_LIBSSL */
 
-extern int authenticate (const list_t *entry);
+extern int authenticate (list_t *entry);
 extern int make_socket (const char *, const char *, int);
 extern ssize_t recv_data (list_t *, void *, size_t);
 extern ssize_t send_data (list_t *, const void *, size_t);

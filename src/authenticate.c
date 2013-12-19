@@ -22,7 +22,7 @@
 #include "com.h"
 
 int
-authenticate (const list_t *lst)
+authenticate (list_t *lst)
 {  
   char *buff = xstrdup (pass);
   int len = strlen (buff);

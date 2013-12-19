@@ -10,6 +10,7 @@ libcom_la_LDFLAGS = $(GETADDRINFO) $(HOSTENT_LIB) $(INET_NTOP_LIB) $(LIBSOCKET) 
 libcom_la_SOURCES = 				\
 src/add_entry.c					\
 src/authenticate.c 				\
+src/broadcast.c                                 \
 src/connect_daemon.c				\
 src/delete_entry.c				\
 src/entry.c					\
