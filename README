@@ -7,10 +7,5 @@ To build this package, simply run `./configure && make'.  Make sure
 that you run the testsuite with `make check'.  To install it, run the
 command `sudo make install'.
 
-<<<<<<< HEAD
-SSL/TLS support is in development, see the ssl branch in the git
-repository for more information.
-=======
 Added experimental support for TLS/SSL using the `--with-ssl' option
 to `./configure'.
->>>>>>> ssl
