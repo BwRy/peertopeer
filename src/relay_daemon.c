@@ -36,7 +36,7 @@ relay_daemon (void *arg)
     {
       char buffer[1000];
       memset (buffer, 0, sizeof buffer);
-      ssize_t seen = recv_data (me->conn, buffer, sizeof buffer);
+      ssize_t seen = recv_data (me, buffer, sizeof buffer);
       if (seen <= 0)
 	break;
       list_t *p;
@@ -45,7 +45,7 @@ relay_daemon (void *arg)
 	{
 	  if (p == me)
 	    continue;
-	  if (send_data (p->conn, buffer, (size_t) seen) <= 0)
+	  if (send_data (p, buffer, (size_t) seen) <= 0)
 	    pthread_cancel (p->thread);
 	}
       printf ("%s: %s\n", me->host, buffer);

@@ -34,12 +34,11 @@ delete_entry(list_t *lst)
 
   free (lst->host);
 #if HAVE_LIBSSL
-  SSL_shutdown (lst->conn->ssl);
+  SSL_shutdown (lst->ssl);
 #else
-  shutdown (lst->conn->sock, SHUT_RDWR);
-  gc_cipher_close (lst->conn->cipher);
+  shutdown (lst->sock, SHUT_RDWR);
+  gc_cipher_close (lst->cipher);
 #endif
-  free (lst->conn);
   pthread_cancel (lst->thread);
   free (lst);
 }

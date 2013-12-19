@@ -116,7 +116,7 @@ int main (int argc, char *argv[])
       list_t *p;
       pthread_mutex_lock (&tcp_mut);
       for (p = tcp_rem; p != NULL; p = p->nxt)
-	if (send_data (p->conn, in, len) <= 0)
+	if (send_data (p, in, len) <= 0)
 	  pthread_cancel (p->thread);
       pthread_mutex_unlock (&tcp_mut);
       free (in);
