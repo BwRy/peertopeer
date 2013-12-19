@@ -107,8 +107,6 @@ extern void *listen_daemon (void *);
 extern void *connect_daemon (void *);
 extern void *relay_daemon (void *);
 
-extern int main (int, char **);
-
 #if 0
 {
 #endif
