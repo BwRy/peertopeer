@@ -34,20 +34,18 @@ relay_daemon (void *arg)
 
   for (;;)
     {
-      char buffer[1000];
-      memset (buffer, 0, sizeof buffer);
+      char *buffer = xmalloc (1000); 
       ssize_t seen = recv_data (me, buffer, sizeof buffer);
       if (seen <= 0)
 	break;
-      list_t *p;
-      pthread_mutex_lock (&tcp_mut);
-      for (p = tcp_rem; p; p = p->nxt)
-	{
-	  if (p == me)
-	    continue;
-	  if (send_data (p, buffer, (size_t) seen) <= 0)
-	    pthread_cancel (p->thread);
-	}
+
+      struct broadcast_arg *broad = xmalloc (sizeof *broad);
+      broad->from = me;
+      broad->data = buffer;
+      broad->len = seen;
+      pthread_t thread;
+      pthread_create (&thread, NULL, broadcast, broad);
+
       printf ("%s: %s\n", me->host, buffer);
     }
 

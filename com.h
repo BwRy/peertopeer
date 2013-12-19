@@ -97,7 +97,6 @@ extern void delete_entry (list_t *);
 
 struct broadcast_arg
 {
-  pthread_t waiton;
   list_t *from;
   void *data;
   size_t len;

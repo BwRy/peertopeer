@@ -113,13 +113,12 @@ int main (int argc, char *argv[])
 	  break;
 	}
       size_t len = strlen (in);
-      list_t *p;
-      pthread_mutex_lock (&tcp_mut);
-      for (p = tcp_rem; p != NULL; p = p->nxt)
-	if (send_data (p, in, len) <= 0)
-	  pthread_cancel (p->thread);
-      pthread_mutex_unlock (&tcp_mut);
-      free (in);
+      struct broadcast_arg *b = xmalloc (sizeof *b);
+      b->from = NULL;
+      b->data = in;
+      b->len = len;
+      pthread_t thread;
+      pthread_create (&thread, NULL, broadcast, b);
     }
 
   return 0;

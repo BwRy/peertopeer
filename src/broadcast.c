@@ -24,7 +24,8 @@ void *
 broadcast (void *arg)
 {
   struct broadcast_arg *me = arg;
-  pthread_join (me->waiton);
+  if (me->flags & 1)
+    pthread_join (me->waiton);
   pthread_mutex_lock (&tcp_mut);
   list_t *p;
   for (p = tcp_rem; p; p = p->next)
@@ -35,5 +36,7 @@ broadcast (void *arg)
 	pthread_cancel (me->thread);
     }
   pthread_mutex_unlock (&tcp_mut);
+  free (me->data);
+  free (me);
   return NULL;
 }
