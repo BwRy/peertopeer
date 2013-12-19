@@ -7,6 +7,7 @@ gnulib-tool					\
     --with-tests				\
     --libtool					\
     argp					\
+    crypto/gc-random                            \
     crypto/gc-rijndael				\
     error					\
     getaddrinfo					\

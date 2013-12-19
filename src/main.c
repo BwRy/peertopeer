@@ -116,16 +116,8 @@ int main (int argc, char *argv[])
       list_t *p;
       pthread_mutex_lock (&tcp_mut);
       for (p = tcp_rem; p != NULL; p = p->nxt)
-	{
-	  gc_cipher_encrypt_inline (p->cipher, len, in);
-	  if (send (p->sock, in, len, 0) < 0)
-	    {
-	      error (FATAL_ERRORS, errno, "Could not send message to host %s",
-		     p->host);
-	      pthread_cancel (p->thread);
-	    }
-	  gc_cipher_decrypt_inline (p->cipher, len, in);
-	}
+	if (send_data (p->conn, in, len) <= 0)
+	  pthread_cancel (p->thread);
       pthread_mutex_unlock (&tcp_mut);
       free (in);
     }

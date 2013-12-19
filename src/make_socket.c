@@ -50,7 +50,7 @@ make_socket (const char *host, const char *service, int flags)
 	    {
 	      error (FATAL_ERRORS, errno, "Connect failed");
 	      errno = 0;
-	      cleanup_sock (&sock);
+	      close (sock);
 	      continue;
 	    }
 	}
@@ -60,14 +60,14 @@ make_socket (const char *host, const char *service, int flags)
 	    {
 	      error (FATAL_ERRORS, errno, "Lookup failed");
 	      errno = 0;
-	      cleanup_sock (&sock);
+	      close (sock);
 	      continue;
 	    }
 	  if (listen (sock, 5))
 	    {
 	      error (FATAL_ERRORS, errno, "Could not listen for connections");
 	      errno = 0;
-	      cleanup_sock (&sock);
+	      close (sock);
 	      continue;
 	    }
 	}

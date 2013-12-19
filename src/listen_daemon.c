@@ -26,8 +26,6 @@ listen_daemon (void *arg)
 {
   int sock = make_socket (NULL, TCP_PORT, 0);
 
-  pthread_cleanup_push (cleanup_sock, sock);
-
   for (;;)
     {
       struct sockaddr_storage peeraddr;
@@ -44,13 +42,10 @@ listen_daemon (void *arg)
 	       gai_strerror (errcode));
 
       pthread_t thread;
-      if (pthread_create (&thread, NULL, relay_daemon, 
-			  entry (xstrdup (host), peer)))
+      if (pthread_create (&thread, NULL, relay_daemon, entry (host, peer, 0)))
 	error (1, errno, "Failed to spawn a relay.");
     }
   
-  pthread_cleanup_pop (1);
-
   return NULL;
 }
 

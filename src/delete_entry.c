@@ -21,16 +21,25 @@
 #include "com.h"
 
 void
-delete_entry(const list_t *lst)
+delete_entry(list_t *lst)
 {
   pthread_mutex_lock (&tcp_mut);
   list_t head;
   head.nxt = tcp_rem;
   list_t *p = &head;
-  while (strcmp (lst->host, p->nxt->host))
+  while (p->nxt != lst)
     p = p->nxt;
-  list_t *tmp = p->nxt;
-  p->nxt = p->nxt->nxt;
+  p->nxt = lst->nxt;
   pthread_mutex_unlock (&tcp_mut);
-  free (tmp);
+
+  free (lst->host);
+#if HAVE_LIBSSL
+  SSL_shutdown (lst->conn->ssl);
+#else
+  shutdown (lst->conn->sock, SHUT_RDWR);
+  gc_cipher_close (lst->conn->cipher);
+#endif
+  free (lst->conn);
+  pthread_cancel (lst->thread);
+  free (lst);
 }

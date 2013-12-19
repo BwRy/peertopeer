@@ -23,8 +23,7 @@
 void *
 connect_daemon (void *arg)
 {
-  char *host = xstrdup (arg);
-  int sock = make_socket (host, TCP_PORT, 1);
-  return relay_daemon (entry (host, sock));
+  int sock = make_socket ((char *) arg, TCP_PORT, 1);
+  return relay_daemon (entry ((char *) arg, sock, 1));
 }
 

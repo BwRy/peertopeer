@@ -21,34 +21,32 @@
 #ifndef COM_H
 #define COM_H
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
-#include <limits.h>
 
 #include <errno.h>
 #include <error.h>
 
 #include <pthread.h>
-#include <unistd.h>
-#include <fcntl.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
 
-#include <gmp.h>
-
 #include <argp.h>
 #include "readline.h"
 #include "getpass.h"
-#include "gc.h"
 #include "xalloc.h"
+
+#if HAVE_LIBSSL
+# include <openssl/ssl.h>
+#else
+# include <gmp.h>
+# include "gc.h"
+#endif /* HAVE_LIBSSL */
 
 #define FATAL_ERRORS 1
 #define TCP_PORT "3488"
@@ -56,11 +54,20 @@
 #define PRIME "6864797660130609714981900799081393217269435300143305409394463459185543183397656052122559640661454554977296311391480858037121987999716643812574028291115057151"
 #define BASE "3578289724048573982478935709382473802573492584578203457938452709382758477205983457380894572380759348573485773892758472309857398573498570272349"
 
+typedef struct 
+{
+#if HAVE_LIBSSL
+  SSL *ssl;
+#else
+  int sock;
+  gc_cipher_handle cipher;
+#endif
+} connect_t;
+
 typedef struct _mylist
 {
   char *host;
-  int sock;
-  gc_cipher_handle cipher;
+  connect_t *conn;
   pthread_t thread;
   struct _mylist *nxt;
 } list_t;
@@ -75,18 +82,23 @@ extern "C" {
 extern pthread_mutex_t tcp_mut;
 extern list_t *tcp_rem;
 extern char *pass;
-extern int random_fd;
 
+#if HAVE_LIBSSL
+extern SSL_CTX *client;
+extern SSL_CTX *server;
+#else
 extern mpz_t prime;
 extern mpz_t base;
+#endif /* HAVE_LIBSSL */
 
 extern int authenticate (const list_t *entry);
 extern int make_socket (const char *, const char *, int);
-extern void cleanup_sock (int *);
+extern ssize_t recv_data (connect_t *, void *, size_t);
+extern ssize_t send_data (connect_t *, const void *, size_t);
 
-extern list_t *entry (char *, int);
-extern void add_entry (const list_t *);
-extern void delete_entry (const list_t *);
+extern list_t *entry (char *, int, int);
+extern void add_entry (list_t *);
+extern void delete_entry (list_t *);
 
 extern void *listen_daemon (void *);
 extern void *connect_daemon (void *);

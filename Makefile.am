@@ -10,14 +10,15 @@ libcom_la_LDFLAGS = $(GETADDRINFO) $(HOSTENT_LIB) $(INET_NTOP_LIB) $(LIBSOCKET) 
 libcom_la_SOURCES = 				\
 src/add_entry.c					\
 src/authenticate.c 				\
-src/cleanup_sock.c				\
 src/connect_daemon.c				\
 src/delete_entry.c				\
 src/entry.c					\
 src/init.c					\
 src/listen_daemon.c				\
 src/make_socket.c 				\
-src/relay_daemon.c				
+src/recv_data.c 				\
+src/relay_daemon.c				\
+src/send_data.c
 
 include_HEADERS = com.h
 
