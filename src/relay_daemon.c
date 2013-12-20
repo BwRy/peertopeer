@@ -34,19 +34,21 @@ relay_daemon (void *arg)
 
   for (;;)
     {
-      char *buffer = xmalloc (1000); 
-      ssize_t seen = recv_data (me, buffer, sizeof buffer);
+      struct broadcast_arg *b = xmalloc (sizeof *b);
+      b->from = me;
+
+#define buf_size 1000
+      b->data = xzalloc (buf_size); 
+      ssize_t seen = recv_data (me, b->data, buf_size);
+#undef buf_size
       if (seen <= 0)
 	break;
 
-      struct broadcast_arg *broad = xmalloc (sizeof *broad);
-      broad->from = me;
-      broad->data = buffer;
-      broad->len = seen;
-      pthread_t thread;
-      pthread_create (&thread, NULL, broadcast, broad);
+      printf ("%s: %s\n", me->host, (char *) b->data);
 
-      printf ("%s: %s\n", me->host, buffer);
+      b->len = seen;
+      pthread_t thread;
+      pthread_create (&thread, NULL, broadcast, b);
     }
 
   pthread_cleanup_pop (1);

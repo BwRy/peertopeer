@@ -106,17 +106,16 @@ int main (int argc, char *argv[])
 
   for (;;)
     {
-      char *in = readline (prompt);
-      if (in == NULL)
+      struct broadcast_arg *b = xmalloc (sizeof *b);
+      b->from = NULL;
+      b->data = readline (prompt);
+      if (b->data == NULL)
 	{
+	  free (b);
 	  fprintf (stderr, "\n");
 	  break;
 	}
-      size_t len = strlen (in);
-      struct broadcast_arg *b = xmalloc (sizeof *b);
-      b->from = NULL;
-      b->data = in;
-      b->len = len;
+      b->len = strlen (b->data);
       pthread_t thread;
       pthread_create (&thread, NULL, broadcast, b);
     }
