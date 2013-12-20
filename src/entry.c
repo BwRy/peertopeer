@@ -65,7 +65,7 @@ entry (char *host, int sock, int flags)
   mpz_powm (sent, sent, my_num, prime);
   mpz_export (key, NULL, 1, 1, 1, 0, sent); 
  
-  gc_cipher_setkey (conn->cipher, len, key);
+  gc_cipher_setkey (p->cipher, len, key);
   pthread_cleanup_pop (1);
 #endif /* HAVE_LIBSSL */
 
