@@ -12,7 +12,6 @@ gnulib-tool					\
     error					\
     getaddrinfo					\
     getpass					\
-    readline					\
     xalloc
 
 autoreconf --install --symlink

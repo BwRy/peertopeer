@@ -45,6 +45,20 @@ else
   AC_DEFINE([WITH_SSL], [0])
 fi
 
+# Support for readline.
+AC_ARG_WITH([readline], 
+[AS_HELP_STRING([--with-readline], [use readline])], 
+[case $with_readline in
+yes|no) ;;
+*) AC_MSG_ERROR([Invalid option]) ;;
+esac],
+[with_readline=no])
+
+if test "$with_readline" = "yes"; then
+   AC_CHECK_LIB([readline], [readline], , [AC_MSG_ERROR([Readline not found.])])
+   AC_DEFINE([WITH_READLINE], [1], [Enable use of the readline library.])
+fi
+
 # We want the GMP for the diffie-hellman key exchange routines.
 AC_CHECK_LIB([gmp], [__gmpz_init], ,
   [AC_MSG_ERROR([GNU MP not found, see http://gmplib.org/])])

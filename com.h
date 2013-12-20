@@ -37,9 +37,12 @@
 #include <netdb.h>
 
 #include <argp.h>
-#include "readline.h"
 #include "getpass.h"
 #include "xalloc.h"
+
+#if WITH_READLINE
+# include <readline/readline.h>
+#endif
 
 #if WITH_SSL
 # include <openssl/ssl.h>
@@ -106,6 +109,8 @@ extern void *broadcast (void *);
 extern void *listen_daemon (void *);
 extern void *connect_daemon (void *);
 extern void *relay_daemon (void *);
+
+extern char *input (const char *);
 
 #if 0
 {

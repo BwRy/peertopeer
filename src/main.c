@@ -108,7 +108,7 @@ int main (int argc, char *argv[])
     {
       struct broadcast_arg *b = xmalloc (sizeof *b);
       b->from = NULL;
-      b->data = readline (prompt);
+      b->data = input (prompt);
       if (b->data == NULL)
 	{
 	  free (b);

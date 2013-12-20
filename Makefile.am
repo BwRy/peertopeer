@@ -15,6 +15,7 @@ src/connect_daemon.c				\
 src/delete_entry.c				\
 src/entry.c					\
 src/init.c					\
+src/input.c                                     \
 src/listen_daemon.c				\
 src/make_socket.c 				\
 src/recv_data.c 				\
