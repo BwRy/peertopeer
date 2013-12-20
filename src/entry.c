@@ -28,7 +28,7 @@ entry (char *host, int sock, int flags)
   list_t *p = xmalloc (sizeof *p);
   p->host = xstrdup (host);
 
-#if HAVE_LIBSSL
+#if WITH_SSL
   p->ssl = flags & 1 ? SSL_new (client) : SSL_new (server);
   SSL_set_fd (p->ssl, sock);
 #else
@@ -67,7 +67,7 @@ entry (char *host, int sock, int flags)
  
   gc_cipher_setkey (p->cipher, len, key);
   pthread_cleanup_pop (1);
-#endif /* HAVE_LIBSSL */
+#endif /* WITH_SSL */
 
   return p;
 }

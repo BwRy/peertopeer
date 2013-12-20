@@ -24,7 +24,7 @@ pthread_mutex_t tcp_mut = PTHREAD_MUTEX_INITIALIZER;
 list_t *tcp_rem = NULL;
 char *pass = NULL;
 
-#if HAVE_LIBSSL
+#if WITH_SSL
 SSL_CTX *client;
 SSL_CTX *server;
 #else
@@ -35,7 +35,7 @@ mpz_t base;
 void
 init ()
 {
-#if HAVE_LIBSSL
+#if WITH_SSL
   SSL_library_init ();
   client = SSL_CTX_new (SSLv23_client_method ());
   server = SSL_CTX_new (SSLv23_server_method ());

@@ -41,12 +41,12 @@
 #include "getpass.h"
 #include "xalloc.h"
 
-#if HAVE_LIBSSL
+#if WITH_SSL
 # include <openssl/ssl.h>
 #else
 # include <gmp.h>
 # include "gc.h"
-#endif /* HAVE_LIBSSL */
+#endif /* WITH_SSL */
 
 #define FATAL_ERRORS 1
 #define TCP_PORT "3488"
@@ -57,7 +57,7 @@
 typedef struct _mylist
 {
   char *host;
-#if HAVE_LIBSSL
+#if WITH_SSL
   SSL *ssl;
 #else
   int sock;
@@ -78,13 +78,13 @@ extern pthread_mutex_t tcp_mut;
 extern list_t *tcp_rem;
 extern char *pass;
 
-#if HAVE_LIBSSL
+#if WITH_SSL
 extern SSL_CTX *client;
 extern SSL_CTX *server;
 #else
 extern mpz_t prime;
 extern mpz_t base;
-#endif /* HAVE_LIBSSL */
+#endif /* WITH_SSL */
 
 extern int authenticate (list_t *entry);
 extern int make_socket (const char *, const char *, int);

@@ -33,7 +33,7 @@ delete_entry(list_t *lst)
   pthread_mutex_unlock (&tcp_mut);
 
   free (lst->host);
-#if HAVE_LIBSSL
+#if WITH_SSL
   SSL_shutdown (lst->ssl);
 #else
   shutdown (lst->sock, SHUT_RDWR);
