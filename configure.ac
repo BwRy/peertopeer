@@ -35,7 +35,9 @@ AC_ARG_WITH([ssl],
   [AS_HELP_STRING([--with-ssl], [enable experimental ssl support])], ,
   [with_ssl="no"])
 
-if [ "$with_ssl" != "no" ]; then 
+AC_DEFINE([WITH_SSL], [], [Whether or not we are using SSL.])
+
+if [ x$with_ssl != "xno" ]; then 
   AC_CHECK_LIB([ssl], [SSL_library_init], , 
     [AC_MSG_ERROR([OpenSSL library not found])])
   AC_DEFINE([WITH_SSL], [1])
