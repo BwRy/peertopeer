@@ -29,6 +29,7 @@ TAGS
 
 # build files
 com
+*.1
 *.o
 *.lo
 *.la

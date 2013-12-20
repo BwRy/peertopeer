@@ -26,3 +26,9 @@ include_HEADERS = com.h
 bin_PROGRAMS = com
 com_SOURCES = src/main.c
 com_LDADD = libcom.la lib/libgnu.la
+
+dist_man1_MANS = com.1
+
+com.1: src/main.c $(top_srcdir)/configure.ac
+	$(MAKE) $(AM_MAKEFLAGS) com$(EXEEXT)
+	help2man -o com.1 ./com$(EXEEXT)
