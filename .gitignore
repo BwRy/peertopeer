@@ -24,6 +24,9 @@ libtool
 Makefile
 stamp-h1
 
+# tags files
+TAGS
+
 # build files
 com
 *.o
