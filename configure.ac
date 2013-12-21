@@ -32,17 +32,17 @@ gl_INIT
 
 # Experimental support for ssl.
 AC_ARG_WITH([ssl], 
-  [AS_HELP_STRING([--with-ssl], [enable experimental ssl support])], ,
-  [with_ssl="no"])
+[AS_HELP_STRING([--with-ssl], [enable experimental ssl support])],
+[case $with_ssl in
+yes|no) ;;
+*) AC_MSG_ERROR([Invalid argument]) ;;
+esac],
+[with_ssl="no"])
 
-AC_DEFINE([WITH_SSL], [], [Whether or not we are using SSL.])
-
-if [ x$with_ssl != "xno" ]; then 
+if test "$with_ssl" = "yes"; then 
   AC_CHECK_LIB([ssl], [SSL_library_init], , 
     [AC_MSG_ERROR([OpenSSL library not found])])
-  AC_DEFINE([WITH_SSL], [1])
-else 
-  AC_DEFINE([WITH_SSL], [0])
+  AC_DEFINE([WITH_SSL], [1], [Whether to use the ssl library.])
 fi
 
 # Support for readline.
